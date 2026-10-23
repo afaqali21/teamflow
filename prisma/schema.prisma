@@ -47,6 +47,8 @@ enum NotificationType {
   TASK_ASSIGNED
   TASK_STATUS_CHANGED
   MENTION
+  MESSAGE
+  PROJECT_ADDED
 }
 
 model User {

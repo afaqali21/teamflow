@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { sendAssignmentEmail } from "@/lib/email";
+import { sendNoticeEmail } from "@/lib/email";
 import type { ShellNotification } from "@/lib/notification-item";
 import { getPusher } from "@/lib/pusher";
 import { userChannelName } from "@/lib/user-channel";
@@ -8,7 +8,18 @@ import { userChannelName } from "@/lib/user-channel";
 const NOTICE_LIMIT = 20;
 const NOTICE_EVENT = "notification";
 
-type NoticeType = "TASK_ASSIGNED" | "TASK_STATUS_CHANGED" | "MENTION";
+export type NoticeType =
+  | "TASK_ASSIGNED"
+  | "TASK_STATUS_CHANGED"
+  | "MENTION"
+  | "MESSAGE"
+  | "PROJECT_ADDED";
+
+const EMAIL_TYPES: ReadonlySet<NoticeType> = new Set([
+  "TASK_ASSIGNED",
+  "MESSAGE",
+  "PROJECT_ADDED",
+]);
 
 export async function listNotifications(userId: string): Promise<{
   unreadCount: number;
@@ -82,8 +93,8 @@ export async function notifyUsers(input: {
           readAt: null,
           createdAt: created.createdAt.toISOString(),
         });
-        if (input.type === "TASK_ASSIGNED" && input.email) {
-          await sendAssignmentEmail({ to: recipient.email, ...input.email });
+        if (EMAIL_TYPES.has(input.type) && input.email) {
+          await sendNoticeEmail({ to: recipient.email, ...input.email });
         }
       } catch (error) {
         console.error("Notification failed.", error);
@@ -107,4 +118,16 @@ async function publishNotice(userId: string, payload: ShellNotification) {
   } catch (error) {
     console.error("Pusher notification failed.", error);
   }
+}
+
+export function noticeSnippet(text: string, max = 140) {
+  const trimmed = text.trim();
+  if (trimmed.length <= max) {
+    return trimmed;
+  }
+  return `${trimmed.slice(0, max - 3)}...`;
+}
+
+export function appOrigin() {
+  return (process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "");
 }

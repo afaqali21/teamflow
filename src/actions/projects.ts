@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
+import { appOrigin, notifyUsers } from "@/lib/notifications";
 import { can } from "@/lib/permissions";
 import { removalBlockReason } from "@/lib/project-members";
 import type { ProjectMemberRole } from "@/lib/roles";
@@ -95,8 +96,26 @@ export async function createProject(
         },
       },
     },
-    select: { id: true },
+    select: { id: true, name: true },
   });
+
+  const invited = people.map((person) => person.id);
+  if (invited.length > 0) {
+    const who = actor.name?.trim() || actor.email;
+    const link = `/projects/${project.id}`;
+    await notifyUsers({
+      userIds: invited,
+      actorId: actor.id,
+      type: "PROJECT_ADDED",
+      title: "Added to a project",
+      body: `${who} added you to ${project.name}`,
+      link,
+      email: {
+        subject: `You were added to ${project.name}`,
+        text: `${who} added you to “${project.name}” on Teamflow.\n\n${appOrigin()}${link}\n`,
+      },
+    });
+  }
 
   refreshProject(project.id);
   redirect(`/projects/${project.id}?tab=people`);
@@ -138,10 +157,19 @@ export async function addProjectMember(
     return { error: "That person is already a member." };
   }
 
-  const channels: { id: string }[] = await db.channel.findMany({
-    where: { projectId: parsed.data.projectId, type: "PROJECT" },
-    select: { id: true },
-  });
+  const [channels, project]: [{ id: string }[], { name: string } | null] = await Promise.all([
+    db.channel.findMany({
+      where: { projectId: parsed.data.projectId, type: "PROJECT" },
+      select: { id: true },
+    }),
+    db.project.findUnique({
+      where: { id: parsed.data.projectId },
+      select: { name: true },
+    }),
+  ]);
+  if (!project) {
+    return { error: "That project could not be found." };
+  }
 
   await db.$transaction([
     db.projectMember.create({
@@ -152,6 +180,21 @@ export async function addProjectMember(
       skipDuplicates: true,
     }),
   ]);
+
+  const who = actor.name?.trim() || actor.email;
+  const link = `/projects/${parsed.data.projectId}`;
+  await notifyUsers({
+    userIds: [person.id],
+    actorId: actor.id,
+    type: "PROJECT_ADDED",
+    title: "Added to a project",
+    body: `${who} added you to ${project.name}`,
+    link,
+    email: {
+      subject: `You were added to ${project.name}`,
+      text: `${who} added you to “${project.name}” on Teamflow.\n\n${appOrigin()}${link}\n`,
+    },
+  });
 
   refreshProject(parsed.data.projectId);
   return { error: null };

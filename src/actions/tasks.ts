@@ -55,11 +55,10 @@ function assignmentEmail(
   title: string,
   link: string,
 ) {
-  const origin = (process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "");
   const who = actor.name?.trim() || actor.email;
   return {
     subject: "You were assigned a task",
-    text: `${who} assigned you "${title}".\n\n${origin}${link}\n`,
+    text: `${who} assigned you "${title}".\n\n${(process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "")}${link}\n`,
   };
 }
 

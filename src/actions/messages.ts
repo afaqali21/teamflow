@@ -12,7 +12,7 @@ import { db } from "@/lib/db";
 import { mentionedUserIds, newlyMentioned } from "@/lib/mentions";
 import { mapRow, messageListSelect, getMessages } from "@/lib/messages";
 import { pusherChannelName } from "@/lib/message-page";
-import { notifyUsers } from "@/lib/notifications";
+import { appOrigin, noticeSnippet, notifyUsers } from "@/lib/notifications";
 import { can } from "@/lib/permissions";
 import { presentMessage, presentMessages } from "@/lib/present-chat";
 import { getPusher } from "@/lib/pusher";
@@ -55,27 +55,35 @@ async function publish(channelId: string, event: string, payload: unknown) {
   }
 }
 
+function chatLink(channel: { id: string; projectId: string | null }) {
+  return channel.projectId ? `/projects/${channel.projectId}?tab=chat` : `/chat/${channel.id}`;
+}
+
+async function channelPeople(channelId: string) {
+  const members: { user: { id: string; name: string | null; email: string } }[] =
+    await db.channelMember.findMany({
+      where: { channelId, user: { isActive: true } },
+      select: { user: { select: { id: true, name: true, email: true } } },
+    });
+  return members.map((member) => member.user);
+}
+
 async function notifyMentions(
   channel: { id: string; projectId: string | null },
   actor: { id: string; name: string | null; email: string },
   previousBody: string | null,
   body: string,
+  people: { id: string; name: string | null; email: string }[],
 ) {
   if (!body.includes("@")) {
-    return;
+    return [] as string[];
   }
-  const members: { user: { id: string; name: string | null; email: string } }[] =
-    await db.channelMember.findMany({
-      where: { channelId: channel.id, user: { isActive: true } },
-      select: { user: { select: { id: true, name: true, email: true } } },
-    });
-  const people = members.map((member) => member.user);
   const ids =
     previousBody === null ? mentionedUserIds(body, people) : newlyMentioned(previousBody, body, people);
   if (ids.length === 0) {
-    return;
+    return [];
   }
-  const snippet = body.length > 140 ? `${body.slice(0, 137)}...` : body;
+  const snippet = noticeSnippet(body);
   const who = actor.name?.trim() || actor.email;
   await notifyUsers({
     userIds: ids,
@@ -83,7 +91,38 @@ async function notifyMentions(
     type: "MENTION",
     title: "You were mentioned",
     body: `${who}: ${snippet}`,
-    link: channel.projectId ? `/projects/${channel.projectId}?tab=chat` : `/chat/${channel.id}`,
+    link: chatLink(channel),
+  });
+  return ids;
+}
+
+async function notifyNewMessage(
+  channel: { id: string; projectId: string | null },
+  actor: { id: string; name: string | null; email: string },
+  body: string,
+  people: { id: string; name: string | null; email: string }[],
+  skipIds: string[],
+) {
+  const skip = new Set(skipIds);
+  const recipients = people.map((person) => person.id).filter((id) => id !== actor.id && !skip.has(id));
+  if (recipients.length === 0) {
+    return;
+  }
+  const who = actor.name?.trim() || actor.email;
+  const snippet = body.trim() ? noticeSnippet(body) : "Sent an attachment";
+  const link = chatLink(channel);
+  const origin = appOrigin();
+  await notifyUsers({
+    userIds: recipients,
+    actorId: actor.id,
+    type: "MESSAGE",
+    title: channel.projectId ? "New project message" : "New direct message",
+    body: `${who}: ${snippet}`,
+    link,
+    email: {
+      subject: channel.projectId ? `${who} messaged your project` : `${who} sent you a message`,
+      text: `${who}: ${snippet}\n\nOpen in Teamflow:\n${origin}${link}\n`,
+    },
   });
 }
 
@@ -181,9 +220,11 @@ export async function sendMessage(
     return { error: "The message could not be sent.", message: null };
   }
   await publish(channel.id, "message", message);
-  if (parsed.data.body) {
-    await notifyMentions(channel, actor, null, parsed.data.body);
-  }
+  const people = await channelPeople(channel.id);
+  const mentioned = parsed.data.body
+    ? await notifyMentions(channel, actor, null, parsed.data.body, people)
+    : [];
+  await notifyNewMessage(channel, actor, parsed.data.body, people, mentioned);
   refresh(channel.projectId);
   return { error: null, message };
 }
@@ -232,7 +273,8 @@ export async function editMessage(messageId: string, body: string): Promise<Mess
     return { error: "The message could not be edited.", message: null };
   }
   await publish(existing.channel.id, "message-updated", message);
-  await notifyMentions(existing.channel, actor, existing.body, parsed.data.body);
+  const people = await channelPeople(existing.channel.id);
+  await notifyMentions(existing.channel, actor, existing.body, parsed.data.body, people);
   refresh(existing.channel.projectId);
   return { error: null, message };
 }

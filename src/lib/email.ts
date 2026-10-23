@@ -39,15 +39,15 @@ export async function sendPasswordEmail(input: PasswordEmail) {
   return { delivered: true as const };
 }
 
-export async function sendAssignmentEmail(input: { to: string; subject: string; text: string }) {
+export async function sendNoticeEmail(input: { to: string; subject: string; text: string }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.EMAIL_FROM;
 
   if (!apiKey || !from) {
     if (process.env.NODE_ENV !== "production") {
-      console.info(`Assignment email for ${input.to}: ${input.subject}`);
+      console.info(`Notice email for ${input.to}: ${input.subject}`);
     } else {
-      console.error("Assignment email is not configured.");
+      console.error("Notice email is not configured.");
     }
     return { delivered: false as const };
   }
@@ -61,13 +61,18 @@ export async function sendAssignmentEmail(input: { to: string; subject: string; 
       text: input.text,
     });
     if (error) {
-      console.error("Assignment email failed.", error.message);
+      console.error("Notice email failed.", error.message);
       return { delivered: false as const };
     }
   } catch (error) {
-    console.error("Assignment email failed.", error);
+    console.error("Notice email failed.", error);
     return { delivered: false as const };
   }
 
   return { delivered: true as const };
+}
+
+/** @deprecated Use sendNoticeEmail */
+export async function sendAssignmentEmail(input: { to: string; subject: string; text: string }) {
+  return sendNoticeEmail(input);
 }
