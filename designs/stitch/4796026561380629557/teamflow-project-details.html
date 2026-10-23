@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-container":"#82f5c1","surface-dim":"#d2d9f4","secondary-fixed":"#85f8c4","primary-container":"#4f46e5","on-secondary":"#ffffff","inverse-on-surface":"#eef0ff","surface-container-lowest":"#ffffff","on-secondary-fixed-variant":"#005137","on-primary":"#ffffff","surface-tint":"#4d44e3","on-tertiary-container":"#e4d4ff","surface-container-highest":"#dae2fd","tertiary-fixed-dim":"#d2bbff","surface":"#faf8ff","primary-fixed":"#e2dfff","secondary":"#006c4a","inverse-primary":"#c3c0ff","secondary-fixed-dim":"#68dba9","on-surface-variant":"#464555","on-secondary-fixed":"#002114","primary-fixed-dim":"#c3c0ff","surface-bright":"#faf8ff","on-tertiary-fixed-variant":"#5a00c6","primary":"#3525cd","background":"#faf8ff","on-error":"#ffffff","on-tertiary":"#ffffff","on-background":"#131b2e","on-error-container":"#93000a","on-tertiary-fixed":"#25005a","on-primary-fixed":"#0f0069","tertiary-fixed":"#eaddff","on-surface":"#131b2e","surface-container-low":"#f2f3ff","inverse-surface":"#283044","error":"#ba1a1a","surface-container-high":"#e2e7ff","on-primary-fixed-variant":"#3323cc","surface-container":"#eaedff","error-container":"#ffdad6","on-secondary-container":"#00714e","outline":"#777587","surface-variant":"#dae2fd","tertiary":"#5c00ca","outline-variant":"#c7c4d8","tertiary-container":"#7531e6","on-primary-container":"#dad7ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-lg":"2rem","gutter":"1.5rem","margin-lg":"3rem","gutter-sm":"1rem","margin-sm":"1rem","space-xl":"2.5rem","space-lg":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","margin":"1.5rem","space-md":"1rem"},"fontFamily":{"label-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"headline-xl-mobile":["Inter"],"body-lg":["Inter"],"headline-lg-mobile":["Inter"],"body-sm":["Inter"],"label-md":["Inter"],"headline-lg":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"500"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"600"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low z-50 flex flex-col justify-between py-space-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="px-space-md pb-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Teamflow Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UKFDHPv2mB7zqGwql5UsS94vy_309aHsFaz-K-FpWXJfDbPA9E82fZVVhYg3xnjI3dWyyIFtLLbIjNRcTP2n5r3SAaIn0N8XX_DQkACOQ2SLvtOIiv5esWw-QRDb_hLa138PtATCiG0JOMmdw1KpNrSStiQ9MrYoHnTcblIj6XcRv7tY6x-mu_BiGUBXJK7RYz9ZjuH8zErdV3eP_XvelLvr_q0HJMQeMun_sDLAKII_vvRdNV-TPbfjs"/><span class="font-headline-sm text-headline-sm text-on-surface">Teamflow</span></div><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">20 members</span></div><nav class="flex flex-col gap-1 px-space-sm" data-active-classes="bg-primary-container text-on-primary font-label-lg rounded-lg shadow-sm"><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="font-label-lg text-label-lg">Dashboard</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="font-label-lg text-label-lg">Projects</span><span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">8</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="chat" href="#"><span class="font-label-lg text-label-lg">Chat</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-tasks" href="#"><span class="font-label-lg text-label-lg">My Tasks</span><span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">5</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="files" href="#"><span class="font-label-lg text-label-lg">Files</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="admin" href="#"><span class="font-label-lg text-label-lg">Admin</span><span class="material-symbols-outlined text-base text-outline pointer-events-none">lock</span></a></nav></div><div class="px-space-sm pt-space-md"><div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="relative flex-shrink-0"><img alt="Elena Vance" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa4PoageF51qbj_GDaco6Z0o-GGPVwVUNQXiQHvq-e9Htid0Eihb40deMAjqf8hbgOmvurvuMavyqnJGrojlZD3Owh3NGleHAe_OQbRlj9CQoVL0Y5FVd_T1qE-7Ku0-itmGADS8QHGBWxc3WEEmBBCzUbKqtma16nz1KKEbzj1Vw1WlT-frDmQkYs3kdNURPy-Zac1e6insB215uGAurmQN6qI_1Euf6P2obpU-2VCaBoSCr5lwzI"/><span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface-container-lowest"></span></div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">Elena Vance</span><span class="inline-flex items-center w-fit px-1.5 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">Admin</span></div></div><button aria-label="User menu" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-xl pointer-events-none">more_vert</span></button></div></div></aside><div class="pl-[260px]"><header class="fixed top-0 left-[260px] right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center justify-between px-gutter"><div class="flex items-center w-96 relative"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-xl pointer-events-none">search</span><input class="w-full h-10 pl-10 pr-12 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Search tasks, projects, people..." type="text"/><kbd class="absolute right-3 px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm pointer-events-none">⌘K</kbd></div><div class="flex items-center gap-space-md"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-container-highest transition-colors" type="button"><span class="material-symbols-outlined text-lg text-on-surface-variant pointer-events-none">business</span><span>Acme Studio</span><span class="material-symbols-outlined text-sm text-on-surface-variant pointer-events-none">unfold_more</span></button><button aria-label="Notifications" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-xl pointer-events-none">notifications</span><span class="absolute top-1.5 right-1.5 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-error text-on-error font-label-sm text-label-sm">3</span></button><button class="h-10 px-3.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center gap-1.5 shadow-sm hover:bg-primary-container transition-colors" type="button"><span class="material-symbols-outlined text-lg pointer-events-none">add</span><span>New</span><span class="material-symbols-outlined text-sm pointer-events-none">expand_more</span></button></div></header><main class="relative pt-16 w-full px-gutter bg-surface min-h-screen"><div class="flex flex-col w-full pb-12">
+<!-- Breadcrumb Navigation Bar -->
+<div class="flex items-center justify-between py-4 mb-2">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<button aria-label="Go back to projects" class="p-1 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface">
+<span class="material-symbols-outlined text-lg pointer-events-none">arrow_back</span>
+</button>
+<span class="hover:text-on-surface cursor-pointer transition-colors">Workspace</span>
+<span class="text-outline-variant">/</span>
+<span class="hover:text-on-surface cursor-pointer transition-colors">Projects</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-semibold flex items-center gap-1.5 bg-primary-fixed/30 px-2 py-0.5 rounded-md">
+<span class="material-symbols-outlined text-sm text-primary">folder_open</span>
+        Brand Refresh &amp; Guidelines (v2.4)
+      </span>
+</div>
+<!-- Quick Status & Breadcrumb Actions -->
+<div class="flex items-center gap-2">
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+        Sprint 4 in progress
+      </span>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Bookmark Project">
+<span class="material-symbols-outlined text-lg pointer-events-none text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Project settings">
+<span class="material-symbols-outlined text-lg pointer-events-none">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Project Header Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm mb-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-96 h-48 bg-gradient-to-bl from-primary/5 via-secondary-container/10 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+<!-- Left Column: Title, Badges & Summary -->
+<div class="flex-1 min-w-0 max-w-3xl">
+<div class="flex flex-wrap items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">palette</span>
+            Design System
+          </span>
+<span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            In Progress • Sprint 4
+          </span>
+<span class="text-outline-variant font-label-sm text-label-sm">•</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+            Updated 14m ago
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-2">
+          Brand Refresh &amp; Guidelines <span class="text-primary font-mono font-medium">(v2.4)</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-5 max-w-2xl">
+          Unified visual tokens, comprehensive typography scales, and multi-platform icon suite for web and mobile clients. Finalizing sprint deliverables prior to client review.
+        </p>
+<!-- Metric badges group -->
+<div class="flex flex-wrap items-center gap-4 text-on-surface">
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-xl">
+<div class="w-20 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 78%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">78%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">complete</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-base text-primary">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">12</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">open tasks</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-base text-error">event</span>
+<span class="font-label-md text-label-md font-semibold text-error">Due Nov 15</span>
+</div>
+</div>
+</div>
+<!-- Right Column: People Stack & Quick Invite -->
+<div class="flex flex-col sm:items-end justify-between self-stretch gap-4 pt-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-1">Core Team:</span>
+<div class="flex items-center -space-x-2 overflow-hidden">
+<div class="relative group cursor-pointer" title="Elena Vance (Admin)">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-lowest shadow-sm" data-alt="Portrait photo of Elena Vance, product design director with dark pulled-back hair and a warm confident smile in a modern studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA02RMG6_Z_M4loueKN2IOUYHJAAYctkJtahUz_vxEuAEn7-xSUe2oe0TBweMgy2HwjpTHK7VNDoWiP0eB0B1090nQ3hbbVOaqqSVgyX_lWzN8T9jshbqCJv2FpQIuhbd_hDQAAK6F1S5nC-xsPLE5H0mapcLKGIEfEiEr0sT0MUvrRzgabDjx6uK5je8TULojAGVRbrZYBv617DfpdIWzSheEePCCw5BNe88AKFaIMOgnm4b6ehmBm"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-tertiary ring-1 ring-surface-container-lowest"></span>
+</div>
+<div class="relative group cursor-pointer" title="Liam Chen (Manager)">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-lowest shadow-sm" data-alt="Portrait photo of Liam Chen, senior UX manager with glasses and a navy sweater in a bright airy tech office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBC5Zfj66_7nSRlckAGSmhPP-qHu7MKMZ3z84akwqUzeeqbLSErDuV3bpRTHcIKGHIxu6rIpL80tcSK_QN908-0IAiXg5qdQrTR-TvmkJe-b5LQou3CYcX6bseFi4iMS_DP-v9JL-FJ_ip7oJx6_rHeFV0egua3cDUqJWpdmkkISH8gb3SxBpDSqhKJDgOJFib90pErm_A0B8wjQKsAo73njpz7X0L24YoTrAzITr-H55G-mfBtPq8I"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary ring-1 ring-surface-container-lowest"></span>
+</div>
+<div class="relative group cursor-pointer" title="Sophia Patel (Employee)">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-lowest shadow-sm" data-alt="Portrait of Sophia Patel, senior product UI designer smiling with wireless headphones in a natural light design lab" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmlQWG7MmBoSjfZ4VbpeVmxz756mfrY_RbmUT4-BQlmeNXYqlOgtuSmIL5FbsxuVEhpqF3QcnY_IwJEc6QDF-VCRggS3XI8YcUK-w_9GVJs6NxWOCODi5vAF5MRTww-UJgVedfMUeiX2t94TW_cz35ITAnK2YxxYeVUNPE5AGTamwUnYSDZgSahycUgwUGC5W39KilOhNpYpF6Fce-dCucS5JuQJ8iIwbpjNsohpESgDPGRRXTAv4d"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary ring-1 ring-surface-container-lowest"></span>
+</div>
+<div class="relative group cursor-pointer" title="Marcus Brody (Employee)">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-lowest shadow-sm" data-alt="Portrait of Marcus Brody, systems engineer with short buzzcut and dark jacket against clean architectural concrete" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_IxHlU7SaiozDL9N2HWBZhJIDTLe76OZoiJ2LQUCQXm0vacV91LnKYW1N8ba_itRBigtneVrl7pTn_-i3nciSCk-o9jsABlwMGU0bvh6Bl1w8b8gNFz12XPKCgPxynUuay8qE0ovnf4wPKYyjruiHmsnyecX-L2mWuXTPbbqolS7-usakjoPx1CqG9IJjXx3zSwhcdOXWB1FjrEfPVlXKAiGr0s1WFcYaRhWDc36JN_3hovWasFwO"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary ring-1 ring-surface-container-lowest"></span>
+</div>
+<div class="relative group cursor-pointer" title="David Kim (Manager)">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-lowest shadow-sm" data-alt="Portrait of David Kim, creative director with neat beard and linen collared shirt smiling gently" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU2mbN2wenuBzNLLqFGZ9WJbtPHLt4yh0KdR3SEwX6oj9h-DzhDehbvh2HkKDnFaYAaL_rIhfsXutFePUsMZS5WDTSP7H74h0ds-7rzVIhvypg__FJASGkQ9kURIzr6NrazT44RgkPkb1RB9cYO5csCLIuAdrUXW6uTN9VF0pg6HMBruSWZsoKlnB7WEkvUcFDnZlLfvAdHftqsOi6-PAfFyTem0PfeT2mcXEhSOLXVs5kH0AlTLjt"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary ring-1 ring-surface-container-lowest"></span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-label-sm text-label-sm font-semibold ring-2 ring-surface-container-lowest">
+              +3
+            </div>
+</div>
+<button class="ml-2 flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-base">person_add</span>
+<span>Invite</span>
+</button>
+</div>
+<div class="flex items-center gap-3 self-start sm:self-end">
+<div class="text-right hidden sm:block">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Lead Design Architect</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Sophia Patel</div>
+</div>
+<div class="w-px h-8 bg-surface-container-high hidden sm:block"></div>
+<button class="h-9 px-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-base text-on-surface-variant">share</span>
+<span>Export Specs</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Segmented Project Tabs Navigation -->
+<div class="flex items-center justify-between border-b border-surface-container-high mb-6 pb-px">
+<div class="flex items-center gap-1 sm:gap-2">
+<!-- Active Chat Tab -->
+<button class="relative flex items-center gap-2 px-4 py-2.5 rounded-t-xl bg-surface-container-lowest font-label-lg text-label-lg text-primary shadow-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span>Chat</span>
+<span class="flex items-center justify-center px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm">3</span>
+<span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full"></span>
+</button>
+<!-- Tasks Tab -->
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg hover:bg-surface-container-high font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg">check_box</span>
+<span>Tasks</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">12</span>
+</button>
+<!-- Files Tab -->
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg hover:bg-surface-container-high font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg">folder</span>
+<span>Files</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">8</span>
+</button>
+<!-- People Tab -->
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg hover:bg-surface-container-high font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg">group</span>
+<span>People</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">8</span>
+</button>
+</div>
+<!-- Tab View Controls -->
+<div class="hidden md:flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+        Room sync live
+      </span>
+<button class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface-variant" title="Search messages in this channel">
+<span class="material-symbols-outlined text-lg pointer-events-none">search</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface-variant" title="Pinned items">
+<span class="material-symbols-outlined text-lg pointer-events-none">push_pin</span>
+</button>
+</div>
+</div>
+<!-- Workspace Grid: Chat Stream + Context Sidebar -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+<!-- Left / Center: Dedicated Project Chat Stream (8 cols) -->
+<div class="xl:col-span-8 flex flex-col bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden min-h-[680px]">
+<!-- Chat Channel Header Bar -->
+<div class="px-space-md py-3.5 bg-surface-container-low/60 flex items-center justify-between border-b border-surface-container">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">tag</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">#brand-refresh-stream</span>
+<span class="px-2 py-0.2 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">v2.4 core team</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Live collaboration channel for visual tokens and system updates</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<button class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm shadow-sm transition-colors">
+<span class="material-symbols-outlined text-sm text-primary">notifications_active</span>
+<span>All Activity</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors" title="Filter stream">
+<span class="material-symbols-outlined text-lg pointer-events-none">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Messages Stream -->
+<div class="p-space-lg flex-1 flex flex-col gap-6 overflow-y-auto">
+<!-- Date Separator Pill -->
+<div class="relative flex items-center justify-center my-1">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-surface-container-high"></div></div>
+<span class="relative px-3 py-1 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm rounded-full shadow-2xs">
+            Today, October 24
+          </span>
+</div>
+<!-- Message 1: Sophia Patel -->
+<div class="flex items-start gap-3.5 group">
+<div class="relative flex-shrink-0">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Close-up avatar portrait of Sophia Patel smiling wearing round glasses in a creative design studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdIhbkxuOCQF-YyFoCWVlOSLCU0SNYNoQdh2llHFPCL_8Tee7urJma-h64SR3AlEUJojhlCOUQ_WgpRik0pJmu4yPQeoXIQ36Iu8-OgvbfM9fnSYcZS00yna3Eb4ehV0kxSEb_u2fiX5BmR1LAqYD0yoD0_gPLQDxjcFE7FCXFUKWz0QgXGDjeWOqgKMT0GTejUZ3Oj4lZ9TPNhzjH_DEcef6SOu8hVGn0GiwP1gYsCMTjceuvK4Ox"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Sophia Patel</span>
+<span class="px-1.5 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm">Employee</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">10:14 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed mb-3">
+              Hey team! Just pushed the updated Figma token set with the semantic color names. Check out the button states when you get a chance.
+            </p>
+<!-- Attachment Card Preview -->
+<div class="max-w-md bg-surface-container-low rounded-xl p-3 flex items-center justify-between gap-3 shadow-2xs hover:bg-surface-container transition-colors cursor-pointer group/file">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">design_services</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">Figma_Design_Tokens_v2.4.fig</span>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
+<span>14.2 MB</span>
+<span>•</span>
+<span class="text-secondary font-medium">Synced from Figma</span>
+</div>
+</div>
+</div>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-lowest transition-colors flex-shrink-0" title="Download Token File">
+<span class="material-symbols-outlined text-lg pointer-events-none">download</span>
+</button>
+</div>
+<!-- Reaction Pills -->
+<div class="flex items-center gap-1.5 mt-2.5">
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+<span>👍</span>
+<span class="font-semibold text-on-surface-variant">3</span>
+</button>
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+<span>🚀</span>
+<span class="font-semibold text-on-surface-variant">2</span>
+</button>
+<button class="p-1 rounded-full text-on-surface-variant opacity-0 group-hover:opacity-100 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-base pointer-events-none">add_reaction</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Message 2: Liam Chen -->
+<div class="flex items-start gap-3.5 group">
+<div class="relative flex-shrink-0">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Avatar portrait of Liam Chen looking attentive in modern tech office surroundings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2rRmTg_Ik4WTJhJ_x2LXGqiojIYUqMn6GI_WJVJN7iy2sN1ecgMZsVOHk9bqRbyfpzpd0sO66Sila1vXQ3W_3OioFKm7bABsx5CngfOzvmV86rsTA3ouAroswcffpVqftoW0oJmWXwt_p1rm3NRJMFVSPeOt4__E6aQS0n4Zi33agUTb2CXk6csvEHleziWRtkqVqak5JbXAO0xDR-2tUcf-wHCkWEE0XD90wm4_MqKSBT9tVvZ7X"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-primary rounded-full ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Liam Chen</span>
+<span class="px-1.5 py-0.2 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">Manager</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">10:32 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed mb-2.5">
+              Reviewed the button states on dark mode. Looks crisp! Let's make sure the contrast ratio for the secondary muted text meets WCAG AAA standards before sprint review.
+            </p>
+<!-- Reaction Pill -->
+<div class="flex items-center gap-1.5">
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+<span>✅</span>
+<span class="font-semibold text-on-surface-variant">1</span>
+</button>
+<button class="p-1 rounded-full text-on-surface-variant opacity-0 group-hover:opacity-100 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-base pointer-events-none">add_reaction</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Message 3: Marcus Brody -->
+<div class="flex items-start gap-3.5 group">
+<div class="relative flex-shrink-0">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Avatar photo of Marcus Brody, design engineer smiling softly with headphones around neck" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsY6PRxoOpWbrGejWjljTUFHaB1T6ZP0v57G3s404PZChvxlYOk8Sr4DaotUUxqb01kFlU7wnw_qsKWnGncURWySvVEBe1V5H-82K7hhabJOwwilAeZeo50gBRlVrdV5S3a9j6potsXtAAuc-qtNInR2ulrQjsk234r4fOMDfQ9UqcB9vAVvV2zqxB0X81ypD3BhVRSO2DCau7VXS9reOlXkqPMg46QWKZDTo_2C4ELe2Zxk6gnX77"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Marcus Brody</span>
+<span class="px-1.5 py-0.2 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm">Employee</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">11:05 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed mb-2">
+              I've ran the contrast audit — all tokens passed with a minimum of <span class="bg-secondary-container/40 text-on-secondary-container px-1.5 py-0.5 rounded font-mono font-medium text-xs">7.2:1 ratio</span>. I've updated the task card in the Tasks tab as well.
+            </p>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-base text-secondary">task_alt</span>
+<span>Task #TF-204 marked ready for verification</span>
+</div>
+</div>
+</div>
+<!-- Message 4: Elena Vance -->
+<div class="flex items-start gap-3.5 group bg-primary-fixed/10 -mx-3 p-3 rounded-xl">
+<div class="relative flex-shrink-0">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait photo of Elena Vance executive administrator with sharp focus and warm confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDniLP-raSCwOtXC_XnYBC80Mpi1y9-vgNtl-0pVJ8VUTsfMm-O7ma_d6oyCB62LD-_SSAgPD3Z9sGmkBHmNrvDBfaXZDGVx-z3qDI7vm4KWAGwq190GBp0Kpekh0WkwgPWaaRj25UvWsYJdZEbRinl5iWVpVDgeGlIbZXjJTqB94-eLwYn4JwR47t87SYQjyaFzxuREaAzkVRsYrvj9Vy-pq3vuDaFVmtsTufgnCatfQGSsJjjv3qB"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-tertiary rounded-full ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Elena Vance</span>
+<span class="px-1.5 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">Admin</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">11:20 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+              Awesome progress everyone! Let's do a quick sync at 2:00 PM to finalize the export package for the engineering handoff.
+            </p>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-primary font-label-sm text-label-sm shadow-2xs transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<span>Add 2:00 PM Sync to Google Calendar</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Rich Message Input Area (Anchored Bottom) -->
+<div class="p-space-md bg-surface-container-lowest border-t border-surface-container">
+<div class="bg-surface-container-low rounded-xl p-3 shadow-inner focus-within:ring-2 focus-within:ring-primary/20 focus-within:bg-surface-container-lowest transition-all">
+<!-- Textarea Input -->
+<textarea class="w-full bg-transparent text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none resize-none" placeholder="Message #brand-refresh... (supports markdown, @mention)" rows="2"></textarea>
+<!-- Input Action Bar & Format Toolbar -->
+<div class="flex items-center justify-between pt-2 border-t border-surface-container-high/60 mt-1">
+<!-- Formatting Controls -->
+<div class="flex items-center gap-1 text-on-surface-variant">
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Bold">
+<span class="material-symbols-outlined text-base">format_bold</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Italic">
+<span class="material-symbols-outlined text-base">format_italic</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Link">
+<span class="material-symbols-outlined text-base">link</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Code block">
+<span class="material-symbols-outlined text-base">code</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Bullet List">
+<span class="material-symbols-outlined text-base">format_list_bulleted</span>
+</button>
+<div class="w-px h-4 bg-surface-container-high mx-1"></div>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Attach file">
+<span class="material-symbols-outlined text-base">attach_file</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Emoji">
+<span class="material-symbols-outlined text-base">mood</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Record voice note">
+<span class="material-symbols-outlined text-base">mic</span>
+</button>
+</div>
+<!-- Send Action Button -->
+<button class="h-9 px-4 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm hover:opacity-90 active:scale-95 transition-all">
+<span>Send</span>
+<span class="material-symbols-outlined text-base">send</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 px-1 text-outline font-label-sm text-label-sm">
+<span>Tip: Press <kbd class="px-1 py-0.5 rounded bg-surface-container text-on-surface-variant font-mono text-[10px]">Return</kbd> to send, <kbd class="px-1 py-0.5 rounded bg-surface-container text-on-surface-variant font-mono text-[10px]">Shift+Return</kbd> for new line</span>
+<span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>4 typing now</span>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Collapsible Project Context & Activity (4 cols) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<!-- Active Voice/Video Room Banner (Design Huddle) -->
+<div class="bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-2xl p-space-md shadow-md relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-28 h-28 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-secondary-fixed"></span>
+</span>
+<span class="font-label-md text-label-md font-semibold text-on-primary uppercase tracking-wider">Live Huddle</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-white/20 text-on-primary font-label-sm text-label-sm">2 participants</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-semibold mb-1 text-on-primary">Design Huddle • Spec Review</h3>
+<p class="font-body-sm text-body-sm text-on-primary-container mb-4">Sophia &amp; Liam are currently screen-sharing Figma token states.</p>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center -space-x-2">
+<img class="w-7 h-7 rounded-full object-cover ring-2 ring-primary-container" data-alt="Micro circular avatar of Sophia Patel active in huddle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwa2_jx-7jsQq64VXtT5B26tfw_3uC8cizUFyKwsZRAkmiNqp9uPX52Wg0VZRMbbqzBnKN0DBD4ll1P_nzh_Moy4rLoIBRWOReMvBTSv_DZJYMVS1ckEjive7MYNMGuJYDoSVC3GrVVxF1UDPawHGLJs9ftts4NfN1h3EbXONcrL7UpKg_1Ddy7YG0leITNKOs4uSHG2Az8-XEhZ2cn4oTKlyxlocZw3Qy8yRzcrSIutpXToI-INtv"/>
+<img class="w-7 h-7 rounded-full object-cover ring-2 ring-primary-container" data-alt="Micro circular avatar of Liam Chen active in audio room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWxbj8YUkzEOcXABjuPxLLUSfmAy7AOJi8JZ0RWfd4T2VwG5APGP-HHD8Gc7jh9KwgcDCTX4LPdIKSqZ6EbCJNCgQ_glBJdH7dpNki_0OcX0hS9o9SLPSga9kRS1CTrJYczyLgYcTuZBH4EzJXP6ZRMYNlXwZ_jSqZOYitbh7DEj8JxtPdvvR07GCTalnazV6ojLi79qB1iIetIzMttwNxOGuSPuEie_quyFtxLPTEtIHd6DPSWAx7"/>
+</div>
+<button class="px-4 py-2 rounded-xl bg-white text-primary font-label-md text-label-md font-semibold hover:bg-surface-bright shadow-sm transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base">headset_mic</span>
+<span>Join Huddle</span>
+</button>
+</div>
+</div>
+<!-- Pinned Project Messages Widget -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">push_pin</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Pinned Information</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">2 items</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="p-3 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Sprint Kickoff Notes &amp; Token Spec</span>
+<span class="text-outline font-label-sm text-label-sm">Oct 20</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              All typography variables must inherit directly from Inter 8pt scales. Refer to spec doc for multi-brand variants.
+            </p>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Client Handoff Date</span>
+<span class="text-error font-label-sm text-label-sm font-medium">Nov 15 Final</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              Deliverables: 1) Master tokens JSON 2) Figma Component library v2.4 3) Storybook documentation pages.
+            </p>
+</div>
+</div>
+</div>
+<!-- Shared Files in Chat -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">attachment</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Shared in Chat</h3>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-medium hover:underline" href="#">View all (8)</a>
+</div>
+<div class="flex flex-col gap-2.5">
+<!-- File Item 1 -->
+<div class="flex items-center justify-between p-2 rounded-xl hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-primary-fixed/40 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-lg">description</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">wcag-contrast-audit.pdf</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2.4 MB • Marcus B.</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant opacity-0 group-hover:opacity-100 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-base">download</span>
+</button>
+</div>
+<!-- File Item 2 -->
+<div class="flex items-center justify-between p-2 rounded-xl hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-secondary-fixed/50 flex items-center justify-center text-secondary flex-shrink-0">
+<span class="material-symbols-outlined text-lg">image</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">component-elevation-matrix.png</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">5.8 MB • Sophia P.</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant opacity-0 group-hover:opacity-100 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-base">download</span>
+</button>
+</div>
+<!-- File Item 3 -->
+<div class="flex items-center justify-between p-2 rounded-xl hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant flex-shrink-0">
+<span class="material-symbols-outlined text-lg">code</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">tokens.export.v2.4.json</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">420 KB • Sophia P.</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant opacity-0 group-hover:opacity-100 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-base">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Project Links -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">bookmark</span>
+<span>Project Links</span>
+</h3>
+<div class="flex flex-col gap-2">
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-container-low text-on-surface transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-md bg-purple-100 text-tertiary flex items-center justify-center font-bold text-xs">F</div>
+<span class="font-label-md text-label-md font-medium">Figma Spec v2.4</span>
+</div>
+<span class="material-symbols-outlined text-sm text-outline-variant">open_in_new</span>
+</a>
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-container-low text-on-surface transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-md bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-xs">GH</div>
+<span class="font-label-md text-label-md font-medium">GitHub Design Tokens Repo</span>
+</div>
+<span class="material-symbols-outlined text-sm text-outline-variant">open_in_new</span>
+</a>
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-container-low text-on-surface transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-md bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xs">SB</div>
+<span class="font-label-md text-label-md font-medium">Storybook Documentation</span>
+</div>
+<span class="material-symbols-outlined text-sm text-outline-variant">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

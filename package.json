@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/lib/permissions.test.ts src/lib/login.test.ts src/lib/password-token.test.ts src/lib/avatar.test.ts",
+    "test": "tsx --test src/lib/permissions.test.ts src/lib/login.test.ts src/lib/password-token.test.ts src/lib/avatar.test.ts src/lib/project-files.test.ts src/lib/attachments.test.ts src/lib/project-members.test.ts src/lib/messages.test.ts src/lib/direct-channel.test.ts src/lib/task-filters.test.ts src/lib/mentions.test.ts src/lib/search.test.ts",
     "db:seed": "tsx prisma/seed.ts"
   },
   "prisma": {
@@ -25,6 +25,8 @@
     "lucide-react": "^1.60.0",
     "next": "16.4.2",
     "next-auth": "^5.0.0-beta.32",
+    "pusher": "^5.3.4",
+    "pusher-js": "^8.6.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "resend": "^6.34.1",

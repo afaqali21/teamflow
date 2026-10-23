@@ -38,3 +38,36 @@ export async function sendPasswordEmail(input: PasswordEmail) {
 
   return { delivered: true as const };
 }
+
+export async function sendAssignmentEmail(input: { to: string; subject: string; text: string }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.EMAIL_FROM;
+
+  if (!apiKey || !from) {
+    if (process.env.NODE_ENV !== "production") {
+      console.info(`Assignment email for ${input.to}: ${input.subject}`);
+    } else {
+      console.error("Assignment email is not configured.");
+    }
+    return { delivered: false as const };
+  }
+
+  try {
+    const resend = new Resend(apiKey);
+    const { error } = await resend.emails.send({
+      from,
+      to: input.to,
+      subject: input.subject,
+      text: input.text,
+    });
+    if (error) {
+      console.error("Assignment email failed.", error.message);
+      return { delivered: false as const };
+    }
+  } catch (error) {
+    console.error("Assignment email failed.", error);
+    return { delivered: false as const };
+  }
+
+  return { delivered: true as const };
+}

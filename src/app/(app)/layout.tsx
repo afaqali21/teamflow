@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import { AppShell } from "@/components/shell/app-shell";
-import { isOwnAvatarKey } from "@/lib/avatar";
-import { presignAvatarGet } from "@/lib/r2";
+import { displayAvatar } from "@/lib/display-avatar";
+import { countUnread } from "@/lib/inbox";
+import { listNotifications } from "@/lib/notifications";
+import { can } from "@/lib/permissions";
 import { requireUser } from "@/lib/session";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -18,36 +20,29 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
 async function AuthenticatedShell({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
-  const avatarUrl = await displayAvatar(user.id, user.image);
+  const [avatarUrl, chatUnread, notifications] = await Promise.all([
+    displayAvatar(user.id, user.image),
+    countUnread(user.id),
+    listNotifications(user.id),
+  ]);
 
   return (
     <AppShell
       user={{
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
         avatarUrl,
+        canCreateProject: can(user, "projects.create"),
+        canManageUsers: can(user, "users.list"),
+        chatUnread,
       }}
+      notifications={notifications}
+      pusherKey={process.env.NEXT_PUBLIC_PUSHER_KEY ?? null}
+      pusherCluster={process.env.NEXT_PUBLIC_PUSHER_CLUSTER ?? process.env.PUSHER_CLUSTER ?? null}
     >
       {children}
     </AppShell>
   );
-}
-
-async function displayAvatar(userId: string, image: string | null) {
-  if (!image) {
-    return null;
-  }
-  if (image.startsWith("https://") || image.startsWith("http://")) {
-    return image;
-  }
-  if (!isOwnAvatarKey(userId, image)) {
-    return null;
-  }
-
-  try {
-    return await presignAvatarGet(image);
-  } catch {
-    return null;
-  }
 }

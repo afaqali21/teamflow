@@ -1,4 +1,4 @@
-import { PrismaClient, Role, TaskPriority, TaskStatus } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -6,47 +6,29 @@ const prisma = new PrismaClient();
 const SEED_PASSWORD = process.env.SEED_PASSWORD ?? "Password123!";
 const PROJECT_NAME = "Product Launch";
 
+const demoUsers = [
+  { name: "Avery Admin", email: "admin@teamflow.local", role: "ADMIN", projectRole: "OWNER" },
+  { name: "Alex Rivera", email: "alex@teamflow.local", role: "MANAGER", projectRole: "MEMBER" },
+  { name: "Jordan Lee", email: "jordan@teamflow.local", role: "EMPLOYEE", projectRole: "MEMBER" },
+] as const;
+
 async function main() {
   const passwordHash = await bcrypt.hash(SEED_PASSWORD, 12);
 
-  const admin = await prisma.user.upsert({
-    where: { email: "admin@teamflow.local" },
-    update: {
-      name: "Avery Admin",
-      role: Role.ADMIN,
-      isActive: true,
-      passwordHash,
-    },
-    create: {
-      name: "Avery Admin",
-      email: "admin@teamflow.local",
-      role: Role.ADMIN,
-      isActive: true,
-      passwordHash,
-    },
-  });
-
-  const employeeSeeds = [
-    { name: "Alex Rivera", email: "alex@teamflow.local" },
-    { name: "Jordan Lee", email: "jordan@teamflow.local" },
-    { name: "Sam Patel", email: "sam@teamflow.local" },
-  ];
-
-  const employees = [];
-  for (const employee of employeeSeeds) {
-    employees.push(
+  const users = [];
+  for (const demo of demoUsers) {
+    users.push(
       await prisma.user.upsert({
-        where: { email: employee.email },
+        where: { email: demo.email },
         update: {
-          name: employee.name,
-          role: Role.EMPLOYEE,
+          role: demo.role,
           isActive: true,
           passwordHash,
         },
         create: {
-          name: employee.name,
-          email: employee.email,
-          role: Role.EMPLOYEE,
+          name: demo.name,
+          email: demo.email,
+          role: demo.role,
           isActive: true,
           passwordHash,
         },
@@ -54,120 +36,156 @@ async function main() {
     );
   }
 
-  const [alex, jordan, sam] = employees;
-  if (!alex || !jordan || !sam) {
-    throw new Error("Expected three employees to be seeded.");
+  const [admin, alex, jordan] = users;
+  if (!admin || !alex || !jordan) {
+    throw new Error("Expected the admin, manager, and employee to be seeded.");
   }
+
+  const dueSoon = daysFromNow(2);
+  const dueLater = daysFromNow(5);
 
   const existingProject = await prisma.project.findFirst({
     where: { name: PROJECT_NAME },
     select: { id: true },
   });
 
-  if (existingProject) {
-    console.log("Sample project already exists. User passwords were refreshed.");
-    return;
-  }
-
-  const dueSoon = daysFromNow(2);
-  const dueLater = daysFromNow(5);
-
-  const project = await prisma.project.create({
-    data: {
-      name: PROJECT_NAME,
-      description: "Coordinate the launch: messaging, tasks, and shared files.",
-      members: {
-        create: [
-          { userId: admin.id, role: "OWNER" },
-          { userId: alex.id, role: "MEMBER" },
-          { userId: jordan.id, role: "MEMBER" },
-          { userId: sam.id, role: "MEMBER" },
-        ],
-      },
-      channels: {
-        create: {
-          type: "PROJECT",
-          name: "general",
-          members: {
-            create: [
-              { userId: admin.id },
-              { userId: alex.id },
-              { userId: jordan.id },
-              { userId: sam.id },
-            ],
-          },
-          messages: {
-            create: [
-              {
-                authorId: admin.id,
-                body: "Welcome to Product Launch. This channel is for the whole team.",
-              },
-              {
-                authorId: alex.id,
-                body: "I'll own the launch checklist and keep tasks updated.",
-              },
-            ],
-          },
+  const project =
+    existingProject ??
+    (await prisma.project.create({
+      data: {
+        name: PROJECT_NAME,
+        description: "Coordinate the launch: messaging, tasks, and shared files.",
+        members: {
+          create: [
+            { userId: admin.id, role: "OWNER" },
+            { userId: alex.id, role: "MEMBER" },
+            { userId: jordan.id, role: "MEMBER" },
+          ],
         },
-      },
-      tasks: {
-        create: [
-          {
-            title: "Draft launch announcement",
-            description: "Write the internal announcement for the launch date.",
-            status: TaskStatus.IN_PROGRESS,
-            priority: TaskPriority.HIGH,
-            assigneeId: alex.id,
-            createdById: admin.id,
-            dueDate: dueSoon,
-            comments: {
-              create: {
-                authorId: jordan.id,
-                body: "I can review the draft tomorrow morning.",
-              },
+        channels: {
+          create: {
+            type: "PROJECT",
+            name: "general",
+            members: {
+              create: [{ userId: admin.id }, { userId: alex.id }, { userId: jordan.id }],
+            },
+            messages: {
+              create: [
+                {
+                  authorId: admin.id,
+                  body: "Welcome to Product Launch. This channel is for the whole team.",
+                },
+                {
+                  authorId: alex.id,
+                  body: "I'll own the launch checklist and keep tasks updated.",
+                },
+              ],
             },
           },
-          {
-            title: "Collect screenshots",
-            status: TaskStatus.TODO,
-            priority: TaskPriority.MEDIUM,
-            assigneeId: sam.id,
-            createdById: admin.id,
-            dueDate: dueLater,
-          },
-          {
-            title: "Confirm stakeholder list",
-            status: TaskStatus.DONE,
-            priority: TaskPriority.LOW,
-            assigneeId: jordan.id,
-            createdById: admin.id,
-          },
-        ],
+        },
+        tasks: {
+          create: [
+            {
+              title: "Draft launch announcement",
+              description: "Write the internal announcement for the launch date.",
+              status: "IN_PROGRESS",
+              priority: "HIGH",
+              assigneeId: alex.id,
+              createdById: admin.id,
+              dueDate: dueSoon,
+              comments: {
+                create: {
+                  authorId: jordan.id,
+                  body: "I can review the draft tomorrow morning.",
+                },
+              },
+            },
+            {
+              title: "Collect screenshots",
+            status: "TODO",
+            priority: "MEDIUM",
+              assigneeId: jordan.id,
+              createdById: admin.id,
+              dueDate: dueLater,
+            },
+            {
+              title: "Confirm stakeholder list",
+            status: "DONE",
+            priority: "LOW",
+              assigneeId: jordan.id,
+              createdById: admin.id,
+            },
+          ],
+        },
       },
-    },
+      select: { id: true },
+    }));
+
+  if (!existingProject) {
+    await prisma.notification.create({
+      data: {
+        userId: alex.id,
+        type: "TASK_ASSIGNED",
+        title: "You were assigned a task",
+        body: "Draft launch announcement",
+      },
+    });
+    await prisma.activityLog.create({
+      data: {
+        actorId: admin.id,
+        action: "project.created",
+        entityType: "Project",
+        entityId: project.id,
+        metadata: { name: PROJECT_NAME },
+      },
+    });
+  }
+
+  await ensureDemoMemberships(project.id, [
+    { userId: admin.id, role: "OWNER" },
+    { userId: alex.id, role: "MEMBER" },
+    { userId: jordan.id, role: "MEMBER" },
+  ]);
+
+  console.log("Seeded admin, manager, and employee on Product Launch.");
+  console.log("admin@teamflow.local is the admin.");
+  console.log("alex@teamflow.local is the manager and a project member.");
+  console.log("jordan@teamflow.local is the employee and a project member.");
+  console.log(`Shared local password: ${SEED_PASSWORD}`);
+}
+
+async function ensureDemoMemberships(
+  projectId: string,
+  members: { userId: string; role: "OWNER" | "MEMBER" }[],
+) {
+  const channel = await prisma.channel.findFirst({
+    where: { projectId, type: "PROJECT", name: "general" },
+    select: { id: true },
+  });
+  const general =
+    channel ??
+    (await prisma.channel.create({
+      data: { projectId, type: "PROJECT", name: "general" },
+      select: { id: true },
+    }));
+
+  await prisma.project.update({
+    where: { id: projectId },
+    data: { archivedAt: null },
   });
 
-  await prisma.notification.create({
-    data: {
-      userId: alex.id,
-      type: "TASK_ASSIGNED",
-      title: "You were assigned a task",
-      body: "Draft launch announcement",
-    },
-  });
-
-  await prisma.activityLog.create({
-    data: {
-      actorId: admin.id,
-      action: "project.created",
-      entityType: "Project",
-      entityId: project.id,
-      metadata: { name: project.name },
-    },
-  });
-
-  console.log("Seeded 1 admin, 3 employees, and the Product Launch project.");
-  console.log(`Local dev password for every seeded user: ${SEED_PASSWORD}`);
+  for (const member of members) {
+    await prisma.projectMember.upsert({
+      where: { projectId_userId: { projectId, userId: member.userId } },
+      update: {},
+      create: { projectId, userId: member.userId, role: member.role },
+    });
+    await prisma.channelMember.upsert({
+      where: { channelId_userId: { channelId: general.id, userId: member.userId } },
+      update: {},
+      create: { channelId: general.id, userId: member.userId },
+    });
+  }
 }
 
 function daysFromNow(days: number) {

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { ProfileForm } from "@/components/profile/profile-form";
+import { PageFrame, PageHeader, SurfaceCard } from "@/components/ui/page-frame";
 import { isOwnAvatarKey } from "@/lib/avatar";
 import { presignAvatarGet } from "@/lib/r2";
 import { requireUser } from "@/lib/session";
@@ -8,9 +9,9 @@ export default function ProfilePage() {
   return (
     <Suspense
       fallback={
-        <main className="mx-auto w-full max-w-3xl px-6 py-10">
+        <PageFrame>
           <p className="text-sm text-muted-foreground">Loading your profile...</p>
-        </main>
+        </PageFrame>
       }
     >
       <ProfilePanel />
@@ -30,13 +31,16 @@ async function ProfilePanel() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-10">
-      <div>
-        <p className="text-sm font-medium text-muted-foreground">Account</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Profile</h1>
-        <p className="mt-1 text-sm text-muted-foreground">{user.email}</p>
-      </div>
-      <ProfileForm name={user.name ?? ""} avatarUrl={avatarUrl} />
-    </main>
+    <PageFrame
+      crumbs={[
+        { label: "Dashboard", href: "/" },
+        { label: "Profile" },
+      ]}
+    >
+      <PageHeader eyebrow="Account" title="Profile" description={user.email} />
+      <SurfaceCard>
+        <ProfileForm name={user.name ?? ""} avatarUrl={avatarUrl} />
+      </SurfaceCard>
+    </PageFrame>
   );
 }

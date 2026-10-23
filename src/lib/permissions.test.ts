@@ -94,6 +94,15 @@ describe("can", () => {
     assert.equal(can(employee, "task.updateStatus", unassigned), false);
     assert.equal(can(manager, "task.updateStatus", unassigned), true);
     assert.equal(can(employee, "task.updateStatus", outside), false);
+    assert.equal(can(manager, "task.update", task), true);
+    assert.equal(can(employee, "task.update", task), false);
+    assert.equal(can(employee, "task.comment", task), true);
+    assert.equal(can(employee, "task.comment", outside), false);
+
+    assert.equal(can(admin, "task.delete", task), true);
+    assert.equal(can(manager, "task.delete", task), false);
+    assert.equal(can(employee, "task.delete", task), false);
+    assert.equal(can(admin, "task.delete", outside), false);
   });
 
   it("lets the uploader, a manager, or an admin delete a project file", () => {
@@ -128,5 +137,34 @@ describe("can", () => {
     assert.equal(can(employee, "message.deleteOwn", otherMessage), false);
     assert.equal(can(manager, "message.editOwn", otherMessage), true);
     assert.equal(can(employee, "message.deleteOwn", { ...ownMessage, isMember: false }), false);
+  });
+
+  it("lets any active user start a direct message with someone else", () => {
+    const other = { type: "directMessage" as const, targetUserId: "alex", targetIsActive: true };
+    for (const actor of [admin, manager, employee]) {
+      assert.equal(can(actor, "directMessage.start", other), true);
+      assert.equal(
+        can(actor, "directMessage.start", { ...other, targetUserId: actor.id }),
+        false,
+      );
+    }
+    assert.equal(
+      can(employee, "directMessage.start", { ...other, targetIsActive: false }),
+      false,
+    );
+    assert.equal(can(inactiveAdmin, "directMessage.start", other), false);
+    assert.equal(can(employee, "directMessage.start"), false);
+  });
+
+  it("lets someone read only their own notifications", () => {
+    for (const actor of [admin, manager, employee]) {
+      assert.equal(can(actor, "notification.read", { type: "notification", ownerId: actor.id }), true);
+      assert.equal(can(actor, "notification.read", { type: "notification", ownerId: "someone-else" }), false);
+    }
+    assert.equal(
+      can(inactiveAdmin, "notification.read", { type: "notification", ownerId: inactiveAdmin.id }),
+      false,
+    );
+    assert.equal(can(employee, "notification.read"), false);
   });
 });

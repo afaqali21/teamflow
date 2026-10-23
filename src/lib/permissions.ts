@@ -13,12 +13,17 @@ export const actions = [
   "project.manageMembers",
   "task.create",
   "task.assign",
+  "task.update",
   "task.updateStatus",
+  "task.comment",
+  "task.delete",
   "file.upload",
   "file.delete",
   "message.send",
   "message.editOwn",
   "message.deleteOwn",
+  "directMessage.start",
+  "notification.read",
 ] as const;
 
 export type Action = (typeof actions)[number];
@@ -34,7 +39,9 @@ export type Resource =
   | { type: "project"; memberRole: ProjectMemberRole | null }
   | { type: "task"; memberRole: ProjectMemberRole | null; assigneeId: string | null }
   | { type: "file"; memberRole: ProjectMemberRole | null; uploaderId: string }
-  | { type: "message"; isMember: boolean; authorId: string };
+  | { type: "message"; isMember: boolean; authorId: string }
+  | { type: "directMessage"; targetUserId: string; targetIsActive: boolean }
+  | { type: "notification"; ownerId: string };
 
 function isProjectMember(memberRole: ProjectMemberRole | null): boolean {
   return memberRole === "OWNER" || memberRole === "MEMBER";
@@ -91,12 +98,21 @@ export function can(
       return resource?.type === "project" && canManageProject(actor, resource.memberRole);
     case "task.create":
     case "task.assign":
+    case "task.update":
       return resource?.type === "task" && canLeadWork(actor, resource.memberRole);
     case "task.updateStatus":
       return (
         resource?.type === "task" &&
         isProjectMember(resource.memberRole) &&
         (resource.assigneeId === actor.id || canLeadWork(actor, resource.memberRole))
+      );
+    case "task.comment":
+      return resource?.type === "task" && isProjectMember(resource.memberRole);
+    case "task.delete":
+      return (
+        actor.role === "ADMIN" &&
+        resource?.type === "task" &&
+        isProjectMember(resource.memberRole)
       );
     case "file.upload":
       return resource?.type === "project" && isProjectMember(resource.memberRole);
@@ -115,6 +131,14 @@ export function can(
         resource.isMember &&
         resource.authorId === actor.id
       );
+    case "directMessage.start":
+      return (
+        resource?.type === "directMessage" &&
+        resource.targetIsActive &&
+        resource.targetUserId !== actor.id
+      );
+    case "notification.read":
+      return resource?.type === "notification" && resource.ownerId === actor.id;
     default: {
       const unreachable: never = action;
       return unreachable;

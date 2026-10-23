@@ -31,7 +31,11 @@ function settings(): R2Settings | null {
   };
 }
 
-export async function presignAvatarPut(key: string, mimeType: string): Promise<string | null> {
+export function isR2Configured(): boolean {
+  return settings() !== null;
+}
+
+export async function presignPut(key: string, mimeType: string): Promise<string | null> {
   const config = settings();
   if (!config) {
     return null;
@@ -48,20 +52,36 @@ export async function presignAvatarPut(key: string, mimeType: string): Promise<s
   );
 }
 
-export async function presignAvatarGet(key: string): Promise<string | null> {
+export async function presignGet(
+  key: string,
+  options?: { fileName?: string; disposition?: "attachment" | "inline" },
+): Promise<string | null> {
   const config = settings();
   if (!config) {
     return null;
   }
 
+  const disposition = options?.disposition ?? (options?.fileName ? "attachment" : undefined);
+  const safeName = options?.fileName?.replace(/["\\]/g, "_");
+
   return getSignedUrl(
     config.client,
-    new GetObjectCommand({ Bucket: config.bucket, Key: key }),
-    { expiresIn: 60 * 15 },
+    new GetObjectCommand({
+      Bucket: config.bucket,
+      Key: key,
+      ...(disposition && safeName
+        ? {
+            ResponseContentDisposition: `${disposition}; filename="${safeName}"`,
+          }
+        : disposition === "inline"
+          ? { ResponseContentDisposition: "inline" }
+          : {}),
+    }),
+    { expiresIn: 60 * 5 },
   );
 }
 
-export async function inspectAvatarObject(
+export async function inspectObject(
   key: string,
 ): Promise<{ size: number; mimeType: string } | null> {
   const config = settings();
@@ -78,11 +98,29 @@ export async function inspectAvatarObject(
   };
 }
 
-export async function deleteAvatarObject(key: string): Promise<void> {
+export async function deleteObject(key: string): Promise<void> {
   const config = settings();
   if (!config) {
     return;
   }
 
   await config.client.send(new DeleteObjectCommand({ Bucket: config.bucket, Key: key }));
+}
+
+export async function presignAvatarPut(key: string, mimeType: string): Promise<string | null> {
+  return presignPut(key, mimeType);
+}
+
+export async function presignAvatarGet(key: string): Promise<string | null> {
+  return presignGet(key);
+}
+
+export async function inspectAvatarObject(
+  key: string,
+): Promise<{ size: number; mimeType: string } | null> {
+  return inspectObject(key);
+}
+
+export async function deleteAvatarObject(key: string): Promise<void> {
+  return deleteObject(key);
 }
