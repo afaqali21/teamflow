@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 const SEED_PASSWORD = process.env.SEED_PASSWORD ?? "Password123!";
-const PROJECT_NAME = "Product Launch";
+const PROJECT_NAME = "Test";
 
 const demoUsers = [
   { name: "Admin", email: "admin@teamflow.local", role: "ADMIN", projectRole: "OWNER" },
@@ -143,7 +143,7 @@ async function main() {
     { userId: afaq.id, role: "MEMBER" },
   ]);
 
-  console.log("Seeded admin and afaq (employee) on Product Launch.");
+  console.log("Seeded admin and afaq (employee) on Test.");
   console.log("admin@teamflow.local is the admin.");
   console.log("dev.gmf781@gmail.com is afaq (employee) and a project member.");
   console.log(`Shared local password: ${SEED_PASSWORD}`);
