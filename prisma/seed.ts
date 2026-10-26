@@ -7,9 +7,8 @@ const SEED_PASSWORD = process.env.SEED_PASSWORD ?? "Password123!";
 const PROJECT_NAME = "Product Launch";
 
 const demoUsers = [
-  { name: "Avery Admin", email: "admin@teamflow.local", role: "ADMIN", projectRole: "OWNER" },
-  { name: "Alex Rivera", email: "alex@teamflow.local", role: "MANAGER", projectRole: "MEMBER" },
-  { name: "Jordan Lee", email: "jordan@teamflow.local", role: "EMPLOYEE", projectRole: "MEMBER" },
+  { name: "Admin", email: "admin@teamflow.local", role: "ADMIN", projectRole: "OWNER" },
+  { name: "afaq", email: "dev.gmf781@gmail.com", role: "EMPLOYEE", projectRole: "MEMBER" },
 ] as const;
 
 async function main() {
@@ -23,7 +22,6 @@ async function main() {
         update: {
           role: demo.role,
           isActive: true,
-          passwordHash,
         },
         create: {
           name: demo.name,
@@ -36,9 +34,9 @@ async function main() {
     );
   }
 
-  const [admin, alex, jordan] = users;
-  if (!admin || !alex || !jordan) {
-    throw new Error("Expected the admin, manager, and employee to be seeded.");
+  const [admin, afaq] = users;
+  if (!admin || !afaq) {
+    throw new Error("Expected the admin and employee to be seeded.");
   }
 
   const dueSoon = daysFromNow(2);
@@ -58,8 +56,7 @@ async function main() {
         members: {
           create: [
             { userId: admin.id, role: "OWNER" },
-            { userId: alex.id, role: "MEMBER" },
-            { userId: jordan.id, role: "MEMBER" },
+            { userId: afaq.id, role: "MEMBER" },
           ],
         },
         channels: {
@@ -67,7 +64,7 @@ async function main() {
             type: "PROJECT",
             name: "general",
             members: {
-              create: [{ userId: admin.id }, { userId: alex.id }, { userId: jordan.id }],
+              create: [{ userId: admin.id }, { userId: afaq.id }],
             },
             messages: {
               create: [
@@ -76,7 +73,7 @@ async function main() {
                   body: "Welcome to Product Launch. This channel is for the whole team.",
                 },
                 {
-                  authorId: alex.id,
+                  authorId: afaq.id,
                   body: "I'll own the launch checklist and keep tasks updated.",
                 },
               ],
@@ -90,29 +87,29 @@ async function main() {
               description: "Write the internal announcement for the launch date.",
               status: "IN_PROGRESS",
               priority: "HIGH",
-              assigneeId: alex.id,
+              assigneeId: afaq.id,
               createdById: admin.id,
               dueDate: dueSoon,
               comments: {
                 create: {
-                  authorId: jordan.id,
+                  authorId: afaq.id,
                   body: "I can review the draft tomorrow morning.",
                 },
               },
             },
             {
               title: "Collect screenshots",
-            status: "TODO",
-            priority: "MEDIUM",
-              assigneeId: jordan.id,
+              status: "TODO",
+              priority: "MEDIUM",
+              assigneeId: afaq.id,
               createdById: admin.id,
               dueDate: dueLater,
             },
             {
               title: "Confirm stakeholder list",
-            status: "DONE",
-            priority: "LOW",
-              assigneeId: jordan.id,
+              status: "DONE",
+              priority: "LOW",
+              assigneeId: afaq.id,
               createdById: admin.id,
             },
           ],
@@ -124,7 +121,7 @@ async function main() {
   if (!existingProject) {
     await prisma.notification.create({
       data: {
-        userId: alex.id,
+        userId: afaq.id,
         type: "TASK_ASSIGNED",
         title: "You were assigned a task",
         body: "Draft launch announcement",
@@ -143,14 +140,12 @@ async function main() {
 
   await ensureDemoMemberships(project.id, [
     { userId: admin.id, role: "OWNER" },
-    { userId: alex.id, role: "MEMBER" },
-    { userId: jordan.id, role: "MEMBER" },
+    { userId: afaq.id, role: "MEMBER" },
   ]);
 
-  console.log("Seeded admin, manager, and employee on Product Launch.");
+  console.log("Seeded admin and afaq (employee) on Product Launch.");
   console.log("admin@teamflow.local is the admin.");
-  console.log("alex@teamflow.local is the manager and a project member.");
-  console.log("jordan@teamflow.local is the employee and a project member.");
+  console.log("dev.gmf781@gmail.com is afaq (employee) and a project member.");
   console.log(`Shared local password: ${SEED_PASSWORD}`);
 }
 
